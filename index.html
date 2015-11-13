@@ -1,0 +1,177 @@
+<html>
+   <head>
+      <title>Drupal 8 Connections</title>
+      <script type = "text/javascript"
+         src = "http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+      </script>
+
+    <style media="screen" type="text/css">
+        .file {
+            white-space: pre;
+            font-family: monospace;
+            box-shadow:         4px 4px 4px 4px #ccc;
+            margin-top: 0;
+            margin-bottom: 35px;
+            width: 50%;
+        }
+        .filename {
+            margin-bottom: 0;
+
+        }
+        #a1, #b1, #c1 {
+            background: #ddffdd;
+        }
+
+        #a2, #b2, #c2 {
+            background: #ffdddd;
+        }
+
+        #a3, #b3, #c3 {
+            background: #ddddff;
+        }
+        #a4, #b4, #c4 {
+            background: #ffffdd;
+        }
+        #a5, #b5, #c5 {
+            background: #ddffff;
+        }
+        .highlighted {
+            font-size: 200%;
+        }
+        .tab {
+            border-top: 2px solid black;
+            border-left: 2px solid black;
+            border-right: 2px solid black;
+            margin-bottom: 0;
+        }
+        .address_bar {
+            border-top: 2px solid black;
+            border-left: 2px solid black;
+            border-right: 2px solid black;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .browser_window {
+            border-top: 2px solid black;
+            border-bottom: 2px solid black;
+            border-left: 2px solid black;
+            border-right: 2px solid black;
+            margin-top: 0;
+        }
+        .mock_browser {
+            float: right;
+            width: 45%;
+        }
+
+    </style>
+
+   </head>
+
+   <body>
+<!-- ##################################################################################### -->
+<!-- ##################################################################################### -->
+<h1>Drupal 8 Interconnections</h1>
+<p>This shows the files needed for a 'hello' module, highlighting the interconnections between various pieces.</p>
+<p>The interconnections are <span style="background: #ddffdd;">color-coded</span>, and can be <span style="font-size: 200%;">enlarged</span> for easier recognition by clicking on them.</p>
+<p>The crude mock browser on the right shows the finished page.</p>
+<hr/>
+
+<!-- ##################################################################################### -->
+<!-- ##################################################################################### -->
+<div class="mock_browser">
+<span class="filename">Mock Browser</span>:
+<br>
+<span class='tab'><span class="highlightable" id="b2">Hello Title</span></span>
+<div class='address_bar'>https://www.example.com/<span class="highlightable" id="b1">say_hello</span></div>
+<div class='browser_window'>
+    <h1><span class="highlightable" id="c2">Hello Title</span></h1>
+    <strong><span class="highlightable" id="b5">Hello there!</span></strong>
+</div>
+</div>
+</div>
+
+<!-- ##################################################################################### -->
+<!-- ##################################################################################### -->
+
+<span class="filename">File: modules/custom/hello/hello.routing.yml:</span>
+<div class='file'>
+hello:
+  path: &apos;<span class="highlightable" id="a1">/say_hello</span>&apos;
+  defaults:
+    _title: &apos;<span class="highlightable" id="a2">Hello Title</span>&apos;
+    _controller: &apos;<span class="highlightable" id="a3">\Drupal\hello\Controller\HelloController</span>::<span class="highlightable" id="a4">content</span>&apos;
+  requirements:
+    _permission: &apos;access content&apos;
+</div>
+
+<!-- ##################################################################################### -->
+<!-- ##################################################################################### -->
+
+<span class="filename">File: <span class="highlightable" id="b3">modules/custom/hello/src/Controller/HelloController.php</span>:</span>
+<div class='file'>
+&lt;?php
+/**
+ * @file
+ * Contains \Drupal\hello\Controller\HelloController.
+ */
+
+namespace Drupal\hello\Controller;
+
+use Drupal\Core\Controller\ControllerBase;
+
+class HelloController extends ControllerBase {
+  public function <span class="highlightable" id="b4">content()</span> {
+    return array(
+        &apos;#markup&apos; => &apos;<strong>&apos; . t(&apos;<span class="highlightable" id="a5">Hello there!</span>&apos;) . &apos;</strong>&apos;,
+    );
+  }
+}
+</div>
+
+<!-- ##################################################################################### -->
+<!-- ##################################################################################### -->
+
+<span class="filename">File: modules/custom/hello/hello.module:</span>
+<div class='file'>
+&lt;?php
+
+/**
+ * @file
+ * Hello module.
+ */
+</div>
+
+<!-- ##################################################################################### -->
+<!-- ##################################################################################### -->
+
+<span class="filename">File: modules/custom/hello/hello.info.yml:</span>
+<div class='file'>
+name: Hello
+type: module
+description: Hello demo module.
+core: 8.x
+</div>
+
+<!-- ##################################################################################### -->
+<!-- ##################################################################################### -->
+
+
+      <script type = "text/javascript">
+        (function( $ ){
+        $(".highlightable").on("click", function(){
+            var id = $(this).attr('id');
+            var index = id.substring(1);
+console.log( '  index = ' + index);
+            $('span[id^="a"]').removeClass("highlighted")
+            $('span[id^="b"]').removeClass("highlighted")
+            $('span[id^="c"]').removeClass("highlighted")
+            $("#a"+index).addClass("highlighted");
+            $("#b"+index).addClass("highlighted");
+            $("#c"+index).addClass("highlighted");
+        });
+        })( jQuery );
+      </script>
+
+   </body>
+
+</html>
