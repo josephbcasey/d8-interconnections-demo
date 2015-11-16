@@ -6,6 +6,7 @@
       </script>
 
     <style media="screen" type="text/css">
+        /* "File" styling. */
         .file {
             white-space: pre;
             font-family: monospace;
@@ -16,16 +17,14 @@
         }
         .filename {
             margin-bottom: 0;
-
         }
+        /* Highlighting. This is toggled by js at the bottom of this page. */
         #a1, #b1, #c1 {
             background: #ddffdd;
         }
-
         #a2, #b2, #c2 {
             background: #ffdddd;
         }
-
         #a3, #b3, #c3 {
             background: #ddddff;
         }
@@ -38,6 +37,7 @@
         .highlighted {
             font-size: 200%;
         }
+        /* Mock browser styling */
         .tab {
             border-top: 2px solid black;
             border-left: 2px solid black;
@@ -62,7 +62,6 @@
             float: right;
             width: 45%;
         }
-
     </style>
 
    </head>
@@ -74,6 +73,8 @@
 <p>This shows the files needed for a 'hello' module, highlighting the interconnections between various pieces.</p>
 <p>The interconnections are <span style="background: #ddffdd;">color-coded</span>, and can be <span style="font-size: 200%;">enlarged</span> for easier recognition by clicking on them.</p>
 <p>The crude mock browser on the right shows the finished page.</p>
+<p>Comments and suggestions are welcome. <a href="mailto:joe.casey@acquia.com">Joe Casey</a></p>
+<p>Last modified November 11th, 2015.</p>
 <hr/>
 
 <!-- ##################################################################################### -->
@@ -99,7 +100,7 @@ hello:
   path: &apos;<span class="highlightable" id="a1">/say_hello</span>&apos;
   defaults:
     _title: &apos;<span class="highlightable" id="a2">Hello Title</span>&apos;
-    _controller: &apos;<span class="highlightable" id="a3">\Drupal\hello\Controller\HelloController</span>::<span class="highlightable" id="a4">content</span>&apos;
+    _controller: &apos;<span class="highlightable" id="a3">\Drupal\hello\HelloController</span>::<span class="highlightable" id="a4">content</span>&apos;
   requirements:
     _permission: &apos;access content&apos;
 </div>
@@ -115,7 +116,7 @@ hello:
  * Contains \Drupal\hello\Controller\HelloController.
  */
 
-namespace Drupal\hello\Controller;
+namespace Drupal\hello;
 
 use Drupal\Core\Controller\ControllerBase;
 
@@ -154,21 +155,25 @@ core: 8.x
 
 <!-- ##################################################################################### -->
 <!-- ##################################################################################### -->
-
-
+        
       <script type = "text/javascript">
         (function( $ ){
-        $(".highlightable").on("click", function(){
-            var id = $(this).attr('id');
-            var index = id.substring(1);
-console.log( '  index = ' + index);
-            $('span[id^="a"]').removeClass("highlighted")
-            $('span[id^="b"]').removeClass("highlighted")
-            $('span[id^="c"]').removeClass("highlighted")
-            $("#a"+index).addClass("highlighted");
-            $("#b"+index).addClass("highlighted");
-            $("#c"+index).addClass("highlighted");
-        });
+            // Toggle highlighting. 
+            $(".highlightable").on("click", function(){
+                // Find out what got clicked.
+                var id = $(this).attr('id');
+                var index = id.substring(1);
+                   
+                // Un-highlight everything.                   
+                $('span[id^="a"]').removeClass("highlighted")
+                $('span[id^="b"]').removeClass("highlighted")
+                $('span[id^="c"]').removeClass("highlighted")
+                
+                // Highlight the clicked element and related elements.
+                $("#a"+index).addClass("highlighted");
+                $("#b"+index).addClass("highlighted");
+                $("#c"+index).addClass("highlighted");
+            });
         })( jQuery );
       </script>
 
