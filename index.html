@@ -108,7 +108,7 @@ hello:
 <!-- ##################################################################################### -->
 <!-- ##################################################################################### -->
 
-<span class="filename">File: <span class="highlightable" id="b3">modules/custom/hello/src/Controller/HelloController.php</span>:</span>
+<span class="filename">File: <span class="highlightable" id="b3">modules/custom/hello/src/HelloController.php</span>:</span>
 <div class='file'>
 &lt;?php
 /**
@@ -155,20 +155,20 @@ core: 8.x
 
 <!-- ##################################################################################### -->
 <!-- ##################################################################################### -->
-        
+
       <script type = "text/javascript">
         (function( $ ){
-            // Toggle highlighting. 
+            // Toggle highlighting.
             $(".highlightable").on("click", function(){
                 // Find out what got clicked.
                 var id = $(this).attr('id');
                 var index = id.substring(1);
-                   
-                // Un-highlight everything.                   
+
+                // Un-highlight everything.
                 $('span[id^="a"]').removeClass("highlighted")
                 $('span[id^="b"]').removeClass("highlighted")
                 $('span[id^="c"]').removeClass("highlighted")
-                
+
                 // Highlight the clicked element and related elements.
                 $("#a"+index).addClass("highlighted");
                 $("#b"+index).addClass("highlighted");
