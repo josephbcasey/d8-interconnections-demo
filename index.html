@@ -1,19 +1,23 @@
 <html>
    <head>
       <title>Drupal 8 Connections</title>
-      <script type = "text/javascript"
-         src = "http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
-      </script>
+
+         <script src = "http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
     <style media="screen" type="text/css">
-        /* "File" styling. */
-        .file {
-            white-space: pre;
-            font-family: monospace;
+        /* "File" styling. The combined div + span setup is required because of some Chrome strangeness.
+        In Chrome, if an 'expander' section (see below) is used inside a file div, then the slideUp() affects both the
+        'expander' and 'expanding' elements. Adding the span fixes that somehow. */
+        div.file {
             box-shadow:         4px 4px 4px 4px #ccc;
             margin-top: 0;
             margin-bottom: 35px;
+            padding-bottom: 1em;
             width: 50%;
+        }
+        span.file {
+            white-space: pre;
+            font-family: monospace;
         }
         .filename {
             margin-bottom: 0;
@@ -62,19 +66,43 @@
             float: right;
             width: 45%;
         }
+
+         /* Expanding text styling */
+.expander {
+border: thin solid black;
+display: inline;
+}
+
+.expanding {
+   white-space: normal;
+font-family: serif;
+background: #eee;
+margin: 0;
+padding: 0 0.5em 0.5em 0.5em;
+width: 50%;
+}
+
+.hidden {
+   display: none;
+}
+.visible {
+   display: inline
+}
+
     </style>
 
    </head>
 
    <body>
+
 <!-- ##################################################################################### -->
 <!-- ##################################################################################### -->
 <h1>Drupal 8 Interconnections</h1>
-<p>This shows the files needed for a 'hello' module, highlighting the interconnections between various pieces.</p>
-<p>The interconnections are <span style="background: #ddffdd;">color-coded</span>, and can be <span style="font-size: 200%;">enlarged</span> for easier recognition by clicking on them.</p>
+<p>This shows the complete files needed for a 'hello' module, highlighting the interconnections between various pieces. The interconnections are <span style="background: #ddffdd;">color-coded</span>, and can be <span style="font-size: 200%;">enlarged</span> for easier recognition by clicking on them.
+Text with <span style="border: thin solid black;">a border</span> has added explanations that can be displayed and hidden by clicking.</p>
 <p>The crude mock browser on the right shows the finished page.</p>
-<p>Comments and suggestions are welcome. <a href="mailto:joe.casey@acquia.com">Joe Casey</a></p>
-<p>Last modified November 11th, 2015.</p>
+<p>This is a work in progress. Last modified November 17th, 2015. Corrections, comments and suggestions are welcome. <a href="mailto:joe.casey@acquia.com">Joe Casey</a></p>
+<p></p>
 <hr/>
 
 <!-- ##################################################################################### -->
@@ -95,7 +123,7 @@
 <!-- ##################################################################################### -->
 
 <span class="filename">File: modules/custom/hello/hello.routing.yml:</span>
-<div class='file'>
+<div class='file'><span class='file'>
 hello:
   path: &apos;<span class="highlightable" id="a1">/say_hello</span>&apos;
   defaults:
@@ -103,22 +131,29 @@ hello:
     _controller: &apos;<span class="highlightable" id="a3">\Drupal\hello\HelloController</span>::<span class="highlightable" id="a4">content</span>&apos;
   requirements:
     _permission: &apos;access content&apos;
-</div>
+</span></div>
 
 <!-- ##################################################################################### -->
 <!-- ##################################################################################### -->
 
 <span class="filename">File: <span class="highlightable" id="b3">modules/custom/hello/src/HelloController.php</span>:</span>
-<div class='file'>
+<div class='file'><span class='file'>
+
 &lt;?php
 /**
  * @file
- * Contains \Drupal\hello\Controller\HelloController.
+ * Contains \Drupal\hello\HelloController.
  */
 
-namespace Drupal\hello;
+<div class="expander" id="namespace" >namespace Drupal\hello;</div>
+<p id="namespace_expand" class="expanding hidden">Required. Some variations are possible.
+See <a href="http://php.net/manual/en/language.namespaces.php">Namespaces</a>
+and <a href="https://www.drupal.org/getting-started-d8-bkg-prereq">Getting Started - Background & Prerequisites (Drupal 8)</a>.</p>
 
-use Drupal\Core\Controller\ControllerBase;
+<div class="expander" id="controllerbase" >use Drupal\Core\Controller\ControllerBase;</div>
+<p id="controllerbase_expand" class="expanding hidden">"Utility base class for thin controllers."
+   See <a href="https://api.drupal.org/api/drupal/core!lib!Drupal!Core!Controller!ControllerBase.php/class/ControllerBase/8">abstract class ControllerBase</a>.
+   This is, in a sense, the connection to core Drupal and Symfony. There are many other ways to set this up.</p>
 
 class HelloController extends ControllerBase {
   public function <span class="highlightable" id="b4">content()</span> {
@@ -127,34 +162,59 @@ class HelloController extends ControllerBase {
     );
   }
 }
-</div>
+</span></div>
 
 <!-- ##################################################################################### -->
 <!-- ##################################################################################### -->
 
-<span class="filename">File: modules/custom/hello/hello.module:</span>
-<div class='file'>
+<span class="filename"><span class="expander" id="module_file" >File: modules/custom/hello/hello.module:</span></span>
+<p id="module_file_expand" class="expanding hidden">This file is required but can be empty.
+See <a href="https://www.drupal.org/node/2116781">Naming and placing your Drupal 8 module</a>.</p>
+<div class='file'><span class='file'>
 &lt;?php
 
 /**
  * @file
  * Hello module.
  */
-</div>
+</span></div>
 
 <!-- ##################################################################################### -->
 <!-- ##################################################################################### -->
 
 <span class="filename">File: modules/custom/hello/hello.info.yml:</span>
-<div class='file'>
+<div class='file'><span class='file'>
 name: Hello
 type: module
 description: Hello demo module.
 core: 8.x
-</div>
+</span></div>
+
 
 <!-- ##################################################################################### -->
 <!-- ##################################################################################### -->
+
+      <script type = "text/javascript">
+        (function( $ ){
+            // Toggle expanding text.
+            $(".expander").on("click", function(){
+                // Find out what got clicked.
+                var id = $(this).attr('id');
+                var element = document.getElementById(id+'_expand');
+                var style = window.getComputedStyle(element);
+                var display = style.getPropertyValue('display');
+                // Toggle hidden and visible classes.
+                if (display == 'none') {
+                    $("#"+id+'_expand').slideDown();
+                }
+                else {
+                    $("#"+id+'_expand').slideUp();
+                    $("#"+id).addClass("visible");
+
+                }
+            });
+        })( jQuery );
+      </script>
 
       <script type = "text/javascript">
         (function( $ ){
