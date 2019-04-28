@@ -76,7 +76,9 @@
 <p>The interconnections are <span style="background: #ddffdd;">color-coded</span>, and can be <span style="font-size: 200%;">enlarged</span> for easier recognition by clicking on them.</p>
 <p>The crude mock browser on the right shows the finished page.</p>
 <p>Comments and suggestions are welcome. <a href="mailto:josephbcasey@gmail.com">Joe Casey</a></p>
-<p>Last modified June 29th, 2017.</p>
+<p>Last modified Nov 12th, 2018.</p>
+
+
 <hr/>
 
 <!-- ##################################################################################### -->
@@ -157,20 +159,20 @@ core: 8.x
 
 <!-- ##################################################################################### -->
 <!-- ##################################################################################### -->
-        
+
       <script type = "text/javascript">
         (function( $ ){
-            // Toggle highlighting. 
+            // Toggle highlighting.
             $(".highlightable").on("click", function(){
                 // Find out what got clicked.
                 var id = $(this).attr('id');
                 var index = id.substring(1);
-                   
-                // Un-highlight everything.                   
+
+                // Un-highlight everything.
                 $('span[id^="a"]').removeClass("highlighted")
                 $('span[id^="b"]').removeClass("highlighted")
                 $('span[id^="c"]').removeClass("highlighted")
-                
+
                 // Highlight the clicked element and related elements.
                 $("#a"+index).addClass("highlighted");
                 $("#b"+index).addClass("highlighted");
